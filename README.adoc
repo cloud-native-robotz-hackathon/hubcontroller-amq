@@ -1,0 +1,28 @@
+= Hub Controller AMQ
+
+This application is part of the Cloud Native Robots Hackathon infrastructure. It routes the REST request from 3Scale to the robot specifc AMQ Topic.
+
+
+It exposes a RESTful API under /api/robots and extracts the token from each request as query parameter *user_key*, then sends an AMQP Message to the AMQ Topic.  Addiontally a temporary resonse topic will be opened where the Hub Controller will wait for the response from the robot und return it as part of the REST Response. 
+
+You can set the AMQ endpoint and credentials in application.properties
+
+IMPORTANT: The application requires Java 8 JDK and Maven 3.3.x or greater.
+
+== Deploying the Application to an OpenShift Cluster 
+
+----
+$ oc login ...
+
+$ oc new-project hubcontroller-amq
+
+$ mvn clean fabric8:deploy -Popenshift -DskipTests
+----
+
+Just run the last command again to update to a new version.
+
+When modifying the configmap in OpenShift, make sure to redeploy the application from the OpenShift Console
+
+TIP: When troubleshooting connection issues check out the the logfile of the Pod in in the OpenShift Console. Also check out the AMQ-Online view of your queues.
+
+

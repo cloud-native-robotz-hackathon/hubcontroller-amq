@@ -1,1 +1,0 @@
-# hubcontroller-amq
